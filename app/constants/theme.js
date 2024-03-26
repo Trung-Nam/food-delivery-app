@@ -57,4 +57,4 @@ const SHADOWS = {
 };
 
 
-export { COLORS, SIZES , SHADOWS };
+export { COLORS, SIZES, SHADOWS };
