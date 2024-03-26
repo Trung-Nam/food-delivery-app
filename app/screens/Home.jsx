@@ -6,13 +6,14 @@ import pages from './page.style'
 import uidata from "../constants/uidata";
 import { UserReversedGeoCode } from "../context/UserReversedGeoCode";
 import { UserLocationContext } from "../context/UserLocationContext";
+import HomeHeader from "../components/HomeHeader";
 
 const Home = () => {
   return (
     <SafeAreaView>
       <View style={pages.viewOne}>
         <View style={pages.viewTwo}>
-
+          <HomeHeader/>
         </View>
       </View>
     </SafeAreaView>
