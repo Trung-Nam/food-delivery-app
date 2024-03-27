@@ -474,7 +474,7 @@ const foods = [
     }
 ]
 
-const cart =  [
+const cart = [
     {
         "_id": "653b6588541d2aa2c1e89cd1",
         "userId": "6537a4448cd1bd140ebddcee",
@@ -511,4 +511,32 @@ const profile = {
     "updatedAt": "2023-10-24T11:02:28.215Z"
 }
 
-export default  {categories, restaurants, foods, cart, profile}
+const choicesList = [
+    {
+        id: 1,
+        name: "Pick up",
+        value: "pickup",
+    },
+    {
+        value: 2,
+        name: "4 Start",
+        value: "4start",
+    },
+    {
+        value: 3,
+        name: "3 Start",
+        value: "3start",
+    },
+    {
+        id: 4,
+        name: "Under 30 min",
+        value: "under30"
+    },
+    {
+        id: 5,
+        name: "Recommended",
+        value: "recommended"
+    }
+]
+
+export default { categories, restaurants, foods, cart, profile, choicesList }
