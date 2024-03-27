@@ -1,15 +1,49 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import * as Location from 'expo-location';
 
 import AssetImage from './AssetImage'
 import { UserReversedGeoCode } from '../context/UserReversedGeoCode'
+import { UserLocationContext } from '../context/UserLocationContext'
 import { COLORS, SIZES } from '../constants/theme'
 
 const HomeHeader = () => {
+    const [time, setTime] = useState(null);
     const { address, setAddress } = useContext(UserReversedGeoCode);
+    const { location, setLocation } = useContext(UserLocationContext);
+
+
+    useEffect(() => {
+        if (location !== null) {
+            reverseGeoCode(location.coords.latitude, location.coords.longitude);
+        }
+    }, [location]);
+
+    const reverseGeoCode = async (latitude, longitude) => {
+        const reverseGeoCodedAddress = await Location.reverseGeocodeAsync({
+            longitude: longitude,
+            latitude: latitude
+        });
+        setAddress(reverseGeoCodedAddress[0]);
+        const greetig = getTimeOfDay();
+        setTime(greetig);
+    };
+
+    const getTimeOfDay = () => {
+        const now = new Date();
+        const hour = now.getHours();
+
+        if (hour >= 0 && hour < 12) {
+            return "☀️"
+        } else if (hour >= 12 && hour < 17) {
+            return "🌤️"
+        } else {
+            return "🌙"
+        }
+    }
 
     return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between',marginTop: 16}}>
             <View style={styles.outerStyle}>
                 <AssetImage
                     data={require('../../assets/images/profile.jpg')}
@@ -25,6 +59,8 @@ const HomeHeader = () => {
                     <Text style={styles.location}>{`${address.city} ${address.name}`}</Text>
                 </View>
             </View>
+
+            <Text style={{fontSize:36}}>{time}</Text>
         </View>
     )
 }
@@ -33,7 +69,7 @@ export default HomeHeader
 
 const styles = StyleSheet.create({
     outerStyle: {
-        marginTop: 16,
+        
         marginBottom: 10,
         marginHorizontal: 20,
         flexDirection: 'row',
