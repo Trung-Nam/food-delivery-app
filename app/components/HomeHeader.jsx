@@ -60,7 +60,7 @@ const HomeHeader = () => {
                 </View>
             </View>
 
-            <Text style={{fontSize:36}}>{time}</Text>
+            <Text style={{fontSize:36,marginRight:8}}>{time}</Text>
         </View>
     )
 }
