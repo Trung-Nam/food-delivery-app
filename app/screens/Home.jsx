@@ -9,6 +9,7 @@ import { UserLocationContext } from "../context/UserLocationContext";
 import HomeHeader from "../components/HomeHeader";
 import CategoryList from "../components/CategoryList";
 import ChoicesList from "../components/ChoicesList";
+import Heading from "../components/Heading";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -16,7 +17,7 @@ const Home = () => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [selectedChoice, setSelectedChoice] = useState(null);
 
-  
+
   console.log(selectedChoice);
   return (
     <SafeAreaView>
@@ -38,6 +39,13 @@ const Home = () => {
               setSelectedChoice={setSelectedChoice}
               setSelectedSection={setSelectedSection}
             />
+
+            <View>
+              <Heading
+                heading={'Nearby Restaurants'}
+                onPress={() => { }}
+              />
+            </View>
           </ScrollView>
         </View>
       </View>
