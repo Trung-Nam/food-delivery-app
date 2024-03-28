@@ -10,6 +10,8 @@ import HomeHeader from "../components/HomeHeader";
 import CategoryList from "../components/CategoryList";
 import ChoicesList from "../components/ChoicesList";
 import Heading from "../components/Heading";
+import NearByRestaurants from "../components/NearByRestaurants";
+import Divider from "../components/Divider";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -43,6 +45,15 @@ const Home = () => {
             <View>
               <Heading
                 heading={'Nearby Restaurants'}
+                onPress={() => { }}
+              />
+
+              <NearByRestaurants />
+
+              <Divider/>
+
+              <Heading
+                heading={'Try Something New'}
                 onPress={() => { }}
               />
             </View>
