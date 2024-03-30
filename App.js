@@ -9,6 +9,7 @@ import * as Location from 'expo-location';
 import BottomTab from './app/navigation/BottomTab';
 import { UserLocationContext } from './app/context/UserLocationContext';
 import { UserReversedGeoCode } from './app/context/UserReversedGeoCode';
+import FoodNavigator from './app/navigation/FoodNavigator';
 const Stack = createNativeStackNavigator();
 export default function App() {
 
@@ -38,10 +39,10 @@ export default function App() {
     (async () => {
       setAddress(defaultAddress)
 
-      let {status} = await Location.requestForegroundPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location is denied.');  
-        return; 
+        setErrorMsg('Permission to access location is denied.');
+        return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
@@ -65,6 +66,12 @@ export default function App() {
             <Stack.Screen
               name='bottom-navigation'
               component={BottomTab}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name='food-navigation'
+              component={FoodNavigator}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
