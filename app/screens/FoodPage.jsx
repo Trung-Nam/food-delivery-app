@@ -4,6 +4,7 @@ import { CartCountContext } from '../context/CartCountContext'
 import { COLORS, SIZES } from '../constants/theme';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import Counter from '../components/Counter';
 const FoodPage = ({ route, navigation }) => {
   const item = route.params.item;
   const [isChecked, setIsChecked] = useState(false);
@@ -117,6 +118,11 @@ const FoodPage = ({ route, navigation }) => {
             style={{ flex: 1 }}
           />
         </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+          <Text style={[styles.title, { marginBottom: 10 }]}>Quantity</Text>
+          <Counter count={count} setCount={setCount} />
+        </View>
       </View>
     </View>
   )
@@ -182,7 +188,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 8,
     paddingHorizontal: 12,
-    flexDirection:"row",
+    flexDirection: "row",
     alignItems: 'center',
   }
 })
