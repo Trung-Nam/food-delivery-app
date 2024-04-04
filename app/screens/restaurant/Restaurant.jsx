@@ -1,16 +1,36 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import RestaurantPage from '../../navigation/RestaurantPage'
 import NetworkImage from '../../components/NetworkImage'
 import { COLORS, SIZES } from '../../constants/theme'
 import { useRoute } from '@react-navigation/native'
 import { RatingInput } from 'react-native-stock-star-rating'
-
+import GoogleApiServices from '../../hook/GoogleApiServices';
+import { UserLocationContext } from '../../context/UserLocationContext'
 
 const Restaurant = ({ navigation }) => {
     const route = useRoute();
+    const [distanceTime, setDistanceTime] = useState({});
+    const { location, setLocation } = useContext(UserLocationContext);
     const item = route.params;
+
+
+    useEffect(() => {
+        GoogleApiServices.calculateDistanceAndTime(
+            item.coords.latitude,
+            item.coords.longitude,
+            location.coords.latitude,
+            location.coords.longitude
+        ).then((result) => {
+            if (result) {
+                setDistanceTime(result);
+            }
+        });
+    }, []);
+
+    const totalTime = GoogleApiServices.extractNumbers(distanceTime.duration)[0] + GoogleApiServices.extractNumbers(item.time)[0]
+
     return (
         <View>
             <View>
@@ -54,10 +74,31 @@ const Restaurant = ({ navigation }) => {
             </View>
 
 
-            <View style={{ height: 200 }}>
+            <View style={{ marginTop: 8, marginHorizontal: 8, marginBottom: 10 }}>
+                <Text style={styles.title}>{item.title}</Text>
 
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <Text style={[styles.small, { color: COLORS.gray }]}>Distance</Text>
+                    {/* Use when have api key of google location */}
+                    {/* <Text style={[styles.small, { fontFamily: 'regular' }]}>{distanceTime.distance}</Text> */}
+                    <Text style={[styles.small, { fontFamily: 'regular' }]}>0.9 km</Text>
+                </View>
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <Text style={[styles.small, { color: COLORS.gray }]}>Prep and Delivery Time</Text>
+                    {/* <Text style={[styles.small, { fontFamily: 'regular' }]}>{totalTime} min</Text> */}
+                    <Text style={[styles.small, { fontFamily: 'regular' }]}>15 min</Text>
+                </View>
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <Text style={[styles.small, { color: COLORS.gray }]}>Cost</Text>
+                    {/* <Text style={[styles.small, { fontFamily: 'regular' }]}>{distanceTime.finalPrice}</Text> */}
+                    <Text style={[styles.small, { fontFamily: 'regular' }]}>$0.9</Text>
+                </View>
             </View>
-            <View style={{ height: 400 }}>
+
+
+            <View style={{ height: SIZES.height / 1.5 }}>
                 <RestaurantPage />
             </View>
         </View>
@@ -76,6 +117,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
+        fontFamily: 'medium',
+        color: COLORS.black
+    },
+    small: {
+        fontSize: 12,
         fontFamily: 'medium',
         color: COLORS.black
     },
