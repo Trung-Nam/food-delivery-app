@@ -1,20 +1,49 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { RestaurantContext } from '../../context/RestaurantContext';
 import GoogleMapView from '../../components/GoogleMapView';
+import { COLORS, SIZES } from '../../constants/theme';
 
 const Directions = () => {
   const { restaurantObj, setRestaurantObj } = useContext(RestaurantContext);
   const coords = restaurantObj.coords;
 
+  const onDirectionClick = () => {
+    const url = Platform.select({
+      ios: "map:" + coords.latitude + "," + coords.longitude,
+      android: "geo:" + coords.latitude + "," + coords.longitude + "?z=16"
+    })
+    Linking.openURL(url);
+  }
 
   return (
     <View>
-      <GoogleMapView placeList={coords} />
+      <GoogleMapView placeList={[coords]} />
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 12 }}>
+        <Text style={[styles.small, { width: SIZES.width / 1.6 }]}>{coords.address}</Text>
+
+        <TouchableOpacity style={styles.ratingBtn} onPress={() => onDirectionClick()}>
+          <Text>Directions</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
 
 export default Directions
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  small: {
+    fontSize: 12,
+    fontFamily: 'regular',
+    color: COLORS.gray
+  },
+  ratingBtn: {
+    borderColor: COLORS.black,
+    borderWidth: 1,
+    borderRadius: 9,
+    padding: 6,
+
+  }
+})

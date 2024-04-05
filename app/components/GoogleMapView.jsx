@@ -4,13 +4,13 @@ import { COLORS, SIZES } from "../constants/theme";
 import { UserLocationContext } from "../context/UserLocationContext";
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import GoogleApiServices from '../hook/GoogleApiServices';
+import PlaceMarker from './PlaceMarker';
 
 const GoogleMapView = ({ placeList }) => {
     const [directions, setDirections] = useState([]);
     const [coordinates, setCoordinates] = useState([]);
     const { location, setLocation } = useContext(UserLocationContext);
     const apiKey = GoogleApiServices.apiKey;
-
     const [mapRegion, setMapRegion] = useState({
         latitude: 35.6855,
         longitude: 139.68884,
@@ -29,8 +29,8 @@ const GoogleMapView = ({ placeList }) => {
             });
 
             fetchDirections(
-                placeList.latitude,
-                placeList.longitude,
+                placeList[0].latitude,
+                placeList[0].longitude,
                 location.coords.latitude,
                 location.coords.longitude
             );
@@ -100,7 +100,15 @@ const GoogleMapView = ({ placeList }) => {
                 provider={PROVIDER_GOOGLE}
                 showsUserLocation={true}
                 region={mapRegion}
-            />
+            >
+                <Marker title="My location" coordinate={mapRegion} />
+                {
+                    placeList.map((item, index) => index <= 1 && <PlaceMarker key={index} coordinates={item} />)
+                }
+
+                <Polyline coordinates={coordinates} strokeColor={COLORS.primary} strokeWidth={5} />
+
+            </MapView>
         </View>
     )
 }
