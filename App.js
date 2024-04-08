@@ -13,12 +13,16 @@ import FoodNavigator from './app/navigation/FoodNavigator';
 import RestaurantPage from './app/navigation/RestaurantPage';
 import Restaurant from './app/screens/restaurant/Restaurant';
 import AddRating from './app/screens/AddRating';
+import SignUp from './app/screens/SignUp';
 import { RestaurantContext } from './app/context/RestaurantContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LoginContext } from './app/context/LoginContext';
 const Stack = createNativeStackNavigator();
 export default function App() {
 
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState(null);
+  const [login, setLogin] = useState(null);
   const [restaurantObj, setRestaurantObj] = useState(null);
   const [error, setErrorMsg] = useState(null);
 
@@ -51,8 +55,8 @@ export default function App() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location)
-
+      setLocation(location);
+      loginStatus();
     })();
 
   }, [])
@@ -62,45 +66,64 @@ export default function App() {
     return;
   }
 
+  const loginStatus = async () => {
+    const userToken = await AsyncStorage.getItem('token');
+
+    if (userToken !== null) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+    console.log(login);
+  };
+
   return (
 
     <UserLocationContext.Provider value={{ location, setLocation }}>
       <UserReversedGeoCode.Provider value={{ address, setAddress }}>
         <RestaurantContext.Provider value={{ restaurantObj, setRestaurantObj }}>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen
-                name='bottom-navigation'
-                component={BottomTab}
-                options={{ headerShown: false }}
-              />
+          <LoginContext.Provider value={{ login, setLogin }}>
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen
+                  name='bottom-navigation'
+                  component={BottomTab}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name='food-navigation'
-                component={FoodNavigator}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name='food-navigation'
+                  component={FoodNavigator}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name='restaurant-page'
-                component={RestaurantPage}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name='restaurant-page'
+                  component={RestaurantPage}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name='restaurant'
-                component={Restaurant}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name='restaurant'
+                  component={Restaurant}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name='rating'
-                component={AddRating}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name='signUp'
+                  component={SignUp}
+                  options={{ headerShown: false }}
+                />
 
-            </Stack.Navigator>
-          </NavigationContainer>
+                <Stack.Screen
+                  name='rating'
+                  component={AddRating}
+                  options={{ headerShown: false }}
+                />
+
+              </Stack.Navigator>
+            </NavigationContainer>
+          </LoginContext.Provider>
         </RestaurantContext.Provider>
       </UserReversedGeoCode.Provider>
     </UserLocationContext.Provider>

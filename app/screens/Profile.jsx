@@ -11,7 +11,8 @@ import ProfileTile from "../components/ProfileTile";
 import RegistrationTile from "../components/RegistrationTile";
 
 const Profile = () => {
-  const [user, setUser] = useState(null)
+  const {login, setLogin} = useContext(LoginContext);
+  const [user, setUser] = useState(null);
 
   // const { user, isProfileLoading, error, refetch } = fetchProfile();
   const profile =
