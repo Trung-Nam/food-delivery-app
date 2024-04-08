@@ -7,8 +7,8 @@ import {
 } from "react-native";
 import React from "react";
 import { COLORS, SIZES } from "../constants/theme";
-import { NetworkImage } from "../components";
 import { RatingInput, Rating } from "react-native-stock-star-rating";
+import NetworkImage from "./NetworkImage";
 
 const CategoryFoodComp = ({ item, onPress }) => {
   return (
@@ -20,17 +20,17 @@ const CategoryFoodComp = ({ item, onPress }) => {
           height={100}
           radius={16}
         />
-         <View
-              style={{ position: "absolute", right: 10, bottom: 10, backgroundColor: COLORS.secondary, borderRadius: 8}}
-            >
-              <Text style={[styles.restaurant, {color: COLORS.lightWhite, marginHorizontal: 5}]}>{` \$ ${item.price}`}</Text>
-            </View>
+        <View
+          style={{ position: "absolute", right: 10, bottom: 10, backgroundColor: COLORS.secondary, borderRadius: 8 }}
+        >
+          <Text style={[styles.restaurant, { color: COLORS.lightWhite, marginHorizontal: 5 }]}>{` \$ ${item.price}`}</Text>
+        </View>
 
         <View style={styles.row}>
           <View>
             <Text style={styles.restaurant}>{item.title}</Text>
 
-           
+
 
             <FlatList
               data={item.foodTags.slice(0, 3)}

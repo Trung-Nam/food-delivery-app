@@ -14,6 +14,7 @@ import NearByRestaurants from "../components/NearByRestaurants";
 import Divider from "../components/Divider";
 import NewFoodList from "../components/NewFoodList";
 import FastestNearYou from "../components/FastestNearYou";
+import HomeCategories from "../components/HomeCategories";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -47,33 +48,45 @@ const Home = () => {
               setSelectedSection={setSelectedSection}
             />
 
-            <View>
-              <Heading
-                heading={'Nearby Restaurants'}
-                onPress={() => { }}
-              />
+            {selectedCategory !== null && selectedSection !== null ? (
+              <View>
+                <Heading
+                  heading={`Browse ${selectedValue}`}
+                  onPress={() => { }}
+                />
+                <HomeCategories/>
+              </View>
+            ) : (
+              <View>
+                <Heading
+                  heading={'Nearby Restaurants'}
+                  onPress={() => { }}
+                />
 
-              <NearByRestaurants />
+                <NearByRestaurants />
 
-              <Divider />
+                <Divider />
 
-              <Heading
-                heading={'Try Something New'}
-                onPress={() => { }}
-              />
+                <Heading
+                  heading={'Try Something New'}
+                  onPress={() => { }}
+                />
 
-              <NewFoodList />
+                <NewFoodList />
 
-              <Divider />
+                <Divider />
 
-              <Heading
-                heading={'Fastest Near You'}
-                onPress={() => { }}
-              />
+                <Heading
+                  heading={'Fastest Near You'}
+                  onPress={() => { }}
+                />
 
-              <FastestNearYou />
+                <FastestNearYou />
 
-            </View>
+              </View>
+            )}
+
+
           </ScrollView>
         </View>
       </View>

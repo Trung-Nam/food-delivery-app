@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RestaurantContext } from '../../context/RestaurantContext';
 import uidata from '../../constants/uidata'
 import FoodTile from '../../components/FoodTile';
+import CategoryFoodComp from '../../components/CategoryFoodComp';
 
 const New = () => {
   const navigation = useNavigation();
@@ -18,7 +19,10 @@ const New = () => {
         keyExtractor={(item) => item._id}
         scrollEnabled
         renderItem={({ item }) => (
-          <FoodTile item={item} showDetails={() => navigation.navigate('food-navigation', item)} />
+          // <FoodTile item={item} showDetails={() => navigation.navigate('food-navigation', item)} />
+          <View style={{ left: 8 }}>
+            <CategoryFoodComp item={item} onPress={() => navigation.navigate('food-navigation', item)} />
+          </View>
         )}
       />
     </View>

@@ -5,7 +5,7 @@ import { COLORS, SHADOWS } from '../constants/theme'
 const CategoryItem = ({ category, selected }) => {
     return (
         <View style={{
-            width: 80,
+            width: 82,
             height: 55,
             padding: 5,
             marginLeft: 12,
